@@ -11,8 +11,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 
-class CountryList(generics.ListCreateAPIView):
-    """View list of all countries and create a new country"""
+class CountryList(generics.ListAPIView):
+    """View list of all countries"""
 
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
@@ -22,8 +22,8 @@ class CountryList(generics.ListCreateAPIView):
 
 
 
-class StateList(generics.ListCreateAPIView):
-    """View list of all states of a country and create a new state"""
+class StateList(generics.ListAPIView):
+    """View list of all states of a country"""
 
     serializer_class = StateSerializer
     filter_backends = [DjangoFilterBackend]
@@ -32,15 +32,15 @@ class StateList(generics.ListCreateAPIView):
     def get_queryset(self):
         """Return list of all states of a specific country"""
 
-        country_code=self.kwargs['country']                                 # Get the country code from the url
+        country_code=self.kwargs['country_code']                                 # Get the country code from the url
         queryset = State.objects.filter(country__code__exact=country_code)
         return queryset
 
 
 
 
-class AddressList(generics.ListCreateAPIView):
-    """View list of all addresses of a state and create a new address"""
+class AddressList(generics.ListAPIView):
+    """View list of all addresses of a state"""
 
     serializer_class = AddressSerializer
     filter_backends = [DjangoFilterBackend]
@@ -49,15 +49,15 @@ class AddressList(generics.ListCreateAPIView):
     def get_queryset(self):
         """Return list of all addresses of specific state"""
 
-        state_name=self.kwargs['state']                                      # Get the state name from the url
+        state_name=self.kwargs['state_name']                                      # Get the state name from the url
         queryset = Address.objects.filter(state__name__exact=state_name)
         return queryset
 
 
 
 
-class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
-    """View a detailed address, update the address and destroy the address"""
+class AddressDetail(generics.RetrieveAPIView):
+    """View a detailed address"""
 
     queryset = Address.objects.all()
     serializer_class= AddressDetailSerializer

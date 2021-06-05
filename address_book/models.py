@@ -11,7 +11,7 @@ class Country(models.Model):
     """Define a country"""
 
     name = models.CharField(max_length=50)
-    lattitude = models.FloatField()
+    latitude = models.FloatField()
     longitude = models.FloatField()
     code = models.CharField(max_length=2)                             # ISO code for the country. A list of comprehensive country iso codes canbe found here: https://countrycode.org/
 
