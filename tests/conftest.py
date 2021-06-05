@@ -8,7 +8,7 @@
 
 import pytest
 from pytest_factoryboy import register
-from tests.factories import CountryFactory, StateFactory, AddressFactory
+from tests.factories import CountryFactory, StateFactory, AddressFactory,UserFactory
 from rest_framework.test import APIClient
 
 
@@ -16,6 +16,7 @@ from rest_framework.test import APIClient
 register(CountryFactory)
 register(StateFactory)
 register(AddressFactory)
+register(UserFactory)
 
 
 

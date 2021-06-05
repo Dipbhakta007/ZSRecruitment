@@ -9,10 +9,12 @@ import json
 endpoint = '/api/countries/'
 
 @pytest.mark.django_db
-def test_list(country_factory, api_client):
-    """test the get request to view the list of countries"""
+def test_list_authenticated(country_factory, user_factory, api_client):
+    """test the get request to view the list of countries when client is authenticated"""
 
+    user = user_factory.build()
     country_factory.create_batch(10)
+    api_client.force_authenticate(user=user)
 
     response = api_client.get(endpoint)
 
@@ -21,13 +23,26 @@ def test_list(country_factory, api_client):
 
 
 
-    
+
+@pytest.mark.django_db
+def test_list_not_authenticated(country_factory, api_client):
+    """test the get request to view the list of countries when client is not authenticated"""
+
+    country_factory.create_batch(10)
+    response = api_client.get(endpoint)
+    assert response.status_code == 403
+  
+
+
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('field',[('name'),('code')])
-def test_search(country_factory, api_client, field):
+def test_search(country_factory, user_factory, api_client, field):
     """test the search option for name and code of the country"""
+
+    user = user_factory.build()
     countries = country_factory.create_batch(10)
+    api_client.force_authenticate(user=user)
 
     expected_length_name=0                                      # expected length of the respone for the name of the first country instance
     expected_length_code=0                                      # expected length of the respone for the code of the first country instance
@@ -44,13 +59,14 @@ def test_search(country_factory, api_client, field):
         url=endpoint+'?'+field+'='+countries[0].name
         response = api_client.get(url)
         actual_length_name=len(json.loads(response.content))
+        assert response.status_code == 200
         assert actual_length_name == expected_length_name
 
     else:
         url=endpoint+'?'+field+'='+countries[0].code
         response = api_client.get(url)
-        assert response.status_code == 200
         actual_length_code=len(json.loads(response.content))
+        assert response.status_code == 200
         assert actual_length_code == expected_length_code
 
   

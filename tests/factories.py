@@ -7,6 +7,7 @@
 import factory
 from address_book.models import Country,State,Address
 from faker import Faker
+from django.contrib.auth.models import User
 
 fake=Faker()
 
@@ -22,6 +23,7 @@ class CountryFactory(factory.django.DjangoModelFactory):
 
 
 
+
 class StateFactory(factory.django.DjangoModelFactory):
     """Factory for State model of address_boook"""
     class Meta:
@@ -29,6 +31,7 @@ class StateFactory(factory.django.DjangoModelFactory):
 
     name = factory.LazyAttribute(lambda _: fake.pystr())
     country = factory.SubFactory(CountryFactory)
+
 
 
 
@@ -41,4 +44,21 @@ class AddressFactory(factory.django.DjangoModelFactory):
     house_number = factory.LazyAttribute(lambda _: fake.postcode())
     road_number = factory.LazyAttribute(lambda _: fake.random_digit_not_null())
     state = factory.SubFactory(StateFactory)
+
+
+
+
+class UserFactory(factory.django.DjangoModelFactory):
+    """Factory for django's User model"""
+    class Meta:
+        model = User
+
+    username = 'abcd'
+    password = 'abcd1234'
+    is_superuser = False
+    is_staff = False
+    is_active = True
+
+
+
 

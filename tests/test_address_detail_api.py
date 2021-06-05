@@ -10,9 +10,12 @@ import json
 endpoint = '/api/address-detail/'
 
 @pytest.mark.django_db
-def test_retrieve(address_factory, api_client):
-    """test the get request to view a detailed address with respective state and country identified by its id"""
+def test_retrieve_authenticated(address_factory, user_factory, api_client):
+    """test the get request to view a detailed address with respective state and country identified by its id when authenticated"""
+
+    user=user_factory.build()
     address = address_factory.create()
+    api_client.force_authenticate(user=user)
 
     expected_json= {
         'id': address.id,
@@ -33,10 +36,23 @@ def test_retrieve(address_factory, api_client):
     }
 
     url=endpoint+str(address.id)+"/"
-
     response = api_client.get(url)
-
     actual_json=json.loads(response.content)  # Actual json sent by the API
 
     assert response.status_code == 200
     assert actual_json == expected_json
+
+
+
+
+@pytest.mark.django_db
+def test_retrieve_not_authenticated(address_factory, api_client):
+    """test the get request to view a detailed address with respective state and country identified by its id when not authenticated"""
+
+    address = address_factory.create()
+
+    url=endpoint+str(address.id)+"/"
+    response = api_client.get(url)
+    
+    assert response.status_code == 403
+    

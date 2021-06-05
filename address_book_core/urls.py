@@ -12,4 +12,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),                                                   # Add urls of admin site
     path('', include('address_book.urls',namespace='address_book')),                   # Include urls of the address_book app
     path('api/', include('address_book_api.urls',namespace='address_book_api')),       # Include urls of the address_book_api app
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),     # Activate user login url for the APIview
 ]
