@@ -1,0 +1,32 @@
+# Python CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+
+    working_directory: ~/ZSRecruitment
+
+    steps:
+      # Step 1: obtain repo from GitHub
+      - checkout
+      # Step 2: create virtual env and install dependencies
+      - run:
+          name: install dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      # Step 3: migrate the models
+      - run:
+          name: migrate models
+          command: |
+            . venv/bin/activate
+            python manage.py migrate
+      # Step 4: run tests
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            pytest
+            
