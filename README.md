@@ -4,15 +4,15 @@ This is a Python developer assignmet in the recruitment process of ZS Solutions 
 
 ### API Endpoints
 
-**You must be authenticated to access the API's**
+**You must be authenticated to access the API's**. You can check the API schema at **/api/schema/**
 
 * **/api/countries/** - This API provides list all countries, with the option to filter countries by name and code.<br/> <br/>**Example Response**
 ![coutry_list_api](https://github.com/Dipbhakta007/ZSRecruitment/blob/master/api_screenshots/country_list_api.JPG)
-* **/api/states/<<str:country_code>>/** - This API provides list of all states by countries, with the option to filter states by name. You have to place a country ISO code in place of <<str:country_code>> to get the list of all states of that country. ( **For example**, if there is a country named 'United States of America' and its ISO code is 'US', then to get the list of all states of 'United States of America', the endpoint will be **/api/states/US/** ) <br/> <br/>**Example Response**
+* **/api/states/{country_code}/** - This API provides list of all states by countries, with the option to filter states by name. You have to place a country ISO code in place of {country_code} to get the list of all states of that country. ( **For example**, if there is a country named 'United States of America' and its ISO code is 'US', then to get the list of all states of 'United States of America', the endpoint will be **/api/states/US/** ) <br/> <br/>**Example Response**
 ![state_list_api](https://github.com/Dipbhakta007/ZSRecruitment/blob/master/api_screenshots/state_list_api.JPG)
-* **/api/addresses/<<str:state_name>>** - This API provides list of all addresses of states, with the option to filter addresses by house_number and road_number. You have to place a state name in place of <<str:state_name>> to get the list of all addresses of that state. ( **For example**, if there is a state named 'California', then to get the list of all addresses of 'California', the endpoint will be **/api/states/California/** ) <br/> <br/>**Example Response**
+* **/api/addresses/{state_name}/** - This API provides list of all addresses of states, with the option to filter addresses by house_number and road_number. You have to place a state name in place of {state_name} to get the list of all addresses of that state. ( **For example**, if there is a state named 'California', then to get the list of all addresses of 'California', the endpoint will be **/api/states/California/** ) <br/> <br/>**Example Response**
 ![address_list_api](https://github.com/Dipbhakta007/ZSRecruitment/blob/master/api_screenshots/address_list_api.JPG)
-* **/api/address-detail/<<int:address_id>>** - This API provides detailed view of an address with it’s respective state and country identified by its id. ( **For example**, if there is an address which has id 1, then to get detailed view of that address, the endpoint will be **/api/address-detail/1/** ) <br/> <br/>**Example Response**
+* **/api/address-detail/{address_id}/** - This API provides detailed view of an address with it’s respective state and country identified by its id. ( **For example**, if there is an address which has id 1, then to get detailed view of that address, the endpoint will be **/api/address-detail/1/** ) <br/> <br/>**Example Response**
 ![address_detail_api](https://github.com/Dipbhakta007/ZSRecruitment/blob/master/api_screenshots/address_detail_api.JPG)
 
 ### Test Case Scenarios
